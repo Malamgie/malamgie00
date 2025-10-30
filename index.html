@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malamgiemou Textiles - Modern Elegance</title>
+    
+    <!-- 1. Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 3. Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-gold': '#D4AF37',
+                        'brand-gold-dark': '#B89B35',
+                        'brand-charcoal': '#1A1A1A',
+                        'brand-gray': '#222222',
+                    },
+                    fontFamily: {
+                        'sans': ['Poppins', 'sans-serif'],
+                        'serif': ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-in': 'slideIn 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- 4. Inline SVG for WhatsApp Icon -->
+    <style type="text/css">
+        .whatsapp-svg {
+            width: 1.25em;
+            height: 1.25em;
+            fill: currentColor;
+        }
+    </style>
+
+    <!-- 5. Custom CSS for SPA transitions, Sliders, and Lightbox -->
+    <style type="text/css">
+        /* Import Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            background-color: #1A1A1A; /* brand-charcoal */
+            color: #E5E7EB; /* gray-200 */
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- SPA Section Transitions --- */
+        .page-section {
+            display: none; /* Hide all sections by default */
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        .page-section.active {
+            display: block; /* Show only the active section */
+        }
+
+        /* --- Header Styling --- */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #D4AF37; /* brand-gold */
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .nav-link.active {
+            color: #D4AF37; /* brand-gold */
+        }
+        
+        /* --- Gold Gradient Button --- */
+        .btn-gold {
+            background: linear-gradient(145deg, #EADCA6, #D4AF37);
+            color: #1A1A1A;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+        .btn-gold:hover {
+            background: linear-gradient(145deg, #D4AF37, #B89B35);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* --- Image Slider --- */
+        .image-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .slider-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+        .slider-item.active {
+            opacity: 1;
+        }
+        /* Overlay for Hero */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        
+        /* --- Placeholder Styles --- */
+        .placeholder {
+            background-color: #222222; /* brand-gray */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #D4AF37; /* brand-gold */
+            color: #D4AF37;
+            text-align: center;
+            font-size: 0.9rem;
+            min-height: 400px; /* Default height */
+        }
+        .placeholder-card {
+            min-height: 250px;
+        }
+
+        /* --- Gallery & Lightbox --- */
+        .gallery-grid {
+            column-count: 1;
+            column-gap: 1.5rem; /* gap-6 */
+        }
+        @media (min-width: 640px) {
+            .gallery-grid { column-count: 2; }
+        }
+        @media (min-width: 1024px) {
+            .gallery-grid { column-count: 3; }
+        }
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+        }
+        
+        /* Lightbox */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .lightbox-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 0.5rem; /* rounded-lg */
+        }
+        .lightbox-close {
+            position: absolute;
+            top: -2.5rem; /* -top-10 */
+            right: 0;
+            font-size: 2.5rem; /* text-4xl */
+            color: #D4AF37; /* brand-gold */
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .lightbox-close:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- "Learn More" Toggle --- */
+        .toggle-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .toggle-content.open {
+            max-height: 1000px; /* Arbitrary large height */
+        }
+        
+    </style>
+</head>
+
+<body class="bg-brand-charcoal text-gray-200 font-sans">
+
+    <!-- WhatsApp SVG Icon Definition -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="icon-whatsapp" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.956-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.451 0-9.887 4.434-9.889 9.884-.001 2.225.651 4.315 1.847 6.03l-.341 1.238 1.251-.328zM9.062 7.354c.14-.14.3-.21.46-.21.17 0 .33.07.46.21.14.14.21.3.21.46 0 .17-.07.33-.21.46-.14.14-.3.21-.46.21-.17 0-.33-.07-.46-.21-.14-.14-.21-.3-.21-.46 0-.17.07-.33.21-.46zm3.988 0c.14-.14.3-.21.46-.21.17 0 .33.07.46.21.14.14.21.3.21.46 0 .17-.07.33-.21.46-.14.14-.3.21-.46.21-.17 0-.33-.07-.46-.21-.14-.14-.21-.3-.21-.46 0-.17.07-.33.21-.46zM12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+        </symbol>
+    </svg>
+
+    <!-- ===== HEADER / NAVIGATION ===== -->
+    <header class="bg-brand-charcoal/80 backdrop-blur-md sticky top-0 z-50 shadow-lg shadow-black/20">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#home" class="nav-link-header" data-target="home">
+                <span class="text-2xl font-bold font-serif text-white tracking-wider">MALAMGIEMOU</span>
+            </a>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white text-2xl">
+                &#9776; <!-- Hamburger Icon -->
+            </button>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="nav-link text-white uppercase tracking-widest text-sm font-medium active" data-target="home">Home</a>
+                <a href="#about" class="nav-link text-white uppercase tracking-widest text-sm font-medium" data-target="about">About</a>
+                <a href="#products" class="nav-link text-white uppercase tracking-widest text-sm font-medium" data-target="products">Products</a>
+                <a href="#gallery" class="nav-link text-white uppercase tracking-widest text-sm font-medium" data-target="gallery">Gallery</a>
+                <a href="#contact" class="nav-link text-white uppercase tracking-widest text-sm font-medium" data-target="contact">Contact</a>
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu (Dropdown) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-gray flex-col items-center py-4">
+            <a href="#home" class="nav-link-mobile py-2 text-white uppercase" data-target="home">Home</a>
+            <a href="#about" class="nav-link-mobile py-2 text-white uppercase" data-target="about">About</a>
+            <a href="#products" class="nav-link-mobile py-2 text-white uppercase" data-target="products">Products</a>
+            <a href="#gallery" class="nav-link-mobile py-2 text-white uppercase" data-target="gallery">Gallery</a>
+            <a href="#contact" class="nav-link-mobile py-2 text-white uppercase" data-target="contact">Contact</a>
+        </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT AREA ===== -->
+    <main>
+
+        <!-- ===== 1. HOME (HERO) SECTION ===== -->
+        <section id="home" class="page-section active h-screen min-h-[600px] relative">
+            <!-- Image Slider Background -->
+            <div class="image-slider hero-slider">
+                <!-- 
+                  IMAGE PLACEHOLDER: 
+                  Replace 'background-image: url(...)' with your own images. 
+                  Recommended: High-resolution, slightly dark images.
+                -->
+                <div class="slider-item active" style="background-image: url('https://placehold.co/1920x1080/1A1A1A/E5E7EB?text=Hero+Image+1');"></div>
+                <div class="slider-item" style="background-image: url('https://placehold.co/1920x1080/222222/E5E7EB?text=Hero+Image+2');"></div>
+                <div class="slider-item" style="background-image: url('https://placehold.co/1920x1080/111111/E5E7EB?text=Hero+Image+3');"></div>
+            </div>
+            
+            <!-- Dark Overlay -->
+            <div class="hero-overlay"></div>
+            
+            <!-- Hero Content -->
+            <div class="container mx-auto px-6 h-full flex flex-col justify-center items-center text-center relative z-10">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white leading-tight mb-6 animation-slide-in">
+                    Malamgiemou Textiles
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-200 font-light mb-10 animation-slide-in" style="animation-delay: 0.2s;">
+                    Where Tradition Meets Modern Elegance
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animation-slide-in" style="animation-delay: 0.4s;">
+                    <!-- Explore Button -->
+                    <button class="explore-btn btn-gold font-bold uppercase tracking-wider py-3 px-8 rounded-md text-lg" data-target="products">
+                        Explore Collection
+                    </button>
+                    <!-- WhatsApp Catalog Button -->
+                    <a href="https://wa.me/c/2348134530705" target="_blank" rel="noopener noreferrer" 
+                       class="btn-gold font-bold uppercase tracking-wider py-3 px-8 rounded-md text-lg flex items-center justify-center animate-pulse-slow">
+                        <svg class="whatsapp-svg mr-2"><use href="#icon-whatsapp"></use></svg>
+                        View WhatsApp Catalog
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 2. ABOUT US SECTION ===== -->
+        <section id="about" class="page-section py-20 md:py-32 bg-brand-gray">
+            <div class="container mx-auto px-6 max-w-4xl text-center">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-brand-gold mb-8">About Us</h2>
+                <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
+                    At Malamgiemou Textiles, our mission is to craft premium quality men’s fabrics and ready-to-wear outfits that empower you to express confidence, cultural heritage, and modern sophistication.
+                </p>
+                <div id="toggle-content" class="toggle-content text-left text-gray-400 space-y-4">
+                    <p>We believe that clothing is more than just fabric; it's a statement of identity. Our collections are meticulously curated, blending timeless traditional patterns with contemporary designs. Each piece is crafted with precision, ensuring unparalleled quality that you can see and feel.</p>
+                    <p>From luxurious fabrics sourced from the finest mills to impeccably tailored outfits, we are dedicated to providing our clients with an experience of elegance and distinction. Join us in celebrating a legacy of style.</p>
+                </div>
+                <button id="toggle-btn" class="text-brand-gold font-semibold uppercase tracking-wider border-2 border-brand-gold py-2 px-6 rounded-md hover:bg-brand-gold hover:text-brand-charcoal transition-all duration-300">
+                    Learn More
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== 3. PRODUCTS SECTION ===== -->
+        <section id="products" class="page-section py-20 md:py-32 bg-brand-charcoal">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-brand-gold mb-16 text-center">Our Products</h2>
+                
+                <!-- Product Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                    
+                    <!-- Product Card 1 -->
+                    <div class="bg-brand-gray rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-brand-gold/20 hover:scale-105">
+                        <div class="placeholder placeholder-card">
+                            [Premium Fabric Image]
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-serif font-bold text-white mb-2">Senator Fabric</h3>
+                            <p class="text-gray-400">High-quality, breathable fabric perfect for elegant and formal wear.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Card 2 -->
+                    <div class="bg-brand-gray rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-brand-gold/20 hover:scale-105">
+                        <div class="placeholder placeholder-card">
+                            [Ready-to-Wear Agbada]
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-serif font-bold text-white mb-2">Embroidered Agbada</h3>
+                            <p class="text-gray-400">A complete ready-to-wear outfit, showcasing intricate cultural embroidery.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Card 3 -->
+                    <div class="bg-brand-gray rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-brand-gold/20 hover:scale-105">
+                        <div class="placeholder placeholder-card">
+                            [Kaftan Set Image]
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-serif font-bold text-white mb-2">Modern Kaftan Set</h3>
+                            <p class="text-gray-400">A minimalist and stylish two-piece set for any occasion.</p>
+                        </div>
+                    </div>
+                    <!-- Add more product cards as needed -->
+                </div>
+                
+                <!-- WhatsApp CTA Banner -->
+                <div class="mt-20 max-w-3xl mx-auto text-center p-8 border-2 border-brand-gold rounded-lg bg-brand-gray/50 backdrop-blur-sm shadow-xl">
+                    <a href="https://wa.me/c/2348134530705" target="_blank" rel="noopener noreferrer" 
+                       class="text-2xl font-serif font-bold text-brand-gold hover:text-white transition-colors duration-300">
+                        See More Styles on Our WhatsApp Catalog &rarr;
+                    </a>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- ===== 4. SHOWROOM GALLERY ===== -->
+        <section id="gallery" class="page-section py-20 md:py-32 bg-brand-gray">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-brand-gold mb-16 text-center">Showroom Gallery</h2>
+                
+                <!-- Masonry Gallery Grid -->
+                <div class="gallery-grid">
+                    <!-- 
+                      GALLERY PLACEHOLDERS: 
+                      Replace the 'src' in the <img> tag with your image URL.
+                      The 'data-src' can be a higher-resolution version for the lightbox.
+                    -->
+                    
+                    <!-- Gallery Item 1 -->
+                    <div class="gallery-item">
+                        <img src="https://placehold.co/600x800/222222/D4AF37?text=Mannequin+Standing+Pose" alt="Mannequin Standing Pose" class="w-full h-auto object-cover" data-src="https://placehold.co/1200x1600/222222/D4AF37?text=Mannequin+Standing+Pose">
+                    </div>
+                    
+                    <!-- Gallery Item 2 -->
+                    <div class="gallery-item">
+                        <img src="https://placehold.co/600x400/222222/D4AF37?text=Cap+Display" alt="Cap Display" class="w-full h-auto object-cover" data-src="https://placehold.co/1200x800/222222/D4AF37?text=Cap+Display">
+                    </div>
+                    
+                    <!-- Gallery Item 3 -->
+                    <div class="gallery-item">
+                        <img src="https://placehold.co/600x700/222222/D4AF37?text=Mannequin+Sitting+Pose" alt="Mannequin Sitting Pose" class="w-full h-auto object-cover" data-src="https://placehold.co/1200x1400/222222/D4AF37?text=Mannequin+Sitting+Pose">
+                    </div>
+                    
+                    <!-- Gallery Item 4 -->
+                    <div class="gallery-item">
+                        <img src="https://placehold.co/600x850/222222/D4AF37?text=Mannequin+Walking+Pose" alt="Mannequin Walking Pose" class="w-full h-auto object-cover" data-src="https://placehold.co/1200x1700/222222/D4AF37?text=Mannequin+Walking+Pose">
+                    </div>
+                    
+                    <!-- Gallery Item 5 -->
+                    <div class="gallery-item">
+                        <img src="https://placehold.co/600x600/222222/D4AF37?text=Showroom+Interior" alt="Showroom Interior" class="w-full h-auto object-cover" data-src="https://placehold.co/1200x1200/222222/D4AF37?text=Showroom+Interior">
+                    </div>
+
+                    <!-- Gallery Item 6 -->
+                    <div class="gallery-item">
+                        <img src="https://placehold.co/600x750/222222/D4AF37?text=Mannequin+Standing+Pose+2" alt="Mannequin Standing Pose 2" class="w-full h-auto object-cover" data-src="https://placehold.co/1200x1500/222222/D4AF37?text=Mannequin+Standing+Pose+2">
+                    </div>
+                </div>
+
+                <!-- Mannequin Sliders (as requested) -->
+                <h3 class="text-2xl md:text-3xl font-serif font-bold text-brand-gold mt-20 mb-10 text-center">Featured Displays</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Slider 1: Standing Pose -->
+                    <div class="rounded-lg overflow-hidden shadow-lg">
+                        <div class="image-slider mannequin-slider placeholder">
+                            <div class="slider-item active" style="background-image: url('https://placehold.co/600x800/222222/D4AF37?text=Standing+Pose+1');"></div>
+                            <div class="slider-item" style="background-image: url('https://placehold.co/600x800/222222/D4AF37?text=Standing+Pose+2');"></div>
+                            <div class="slider-item" style="background-image: url('https://placehold.co/600x800/222222/D4AF37?text=Standing+Pose+3');"></div>
+                            <div class="absolute inset-0 flex items-center justify-center p-4">
+                                <span class="text-xl font-bold">[Mannequin Standing Pose]</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slider 2: Sitting Pose -->
+                    <div class="rounded-lg overflow-hidden shadow-lg">
+                        <div class="image-slider mannequin-slider placeholder">
+                            <div class="slider-item active" style="background-image: url('https://placehold.co/600x800/222222/D4AF37?text=Sitting+Pose+1');"></div>
+                            <div class="slider-item" style="background-image: url('https://placehold.co/600x800/222222/D4AF37?text=Sitting+Pose+2');"></div>
+                            <div class="slider-item" style="background-image: url('https://placehold.co/600x800/222222/D4AF37?text=Sitting+Pose+3');"></div>
+                            <div class="absolute inset-0 flex items-center justify-center p-4">
+                                <span class="text-xl font-bold">[Mannequin Sitting Pose]</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slider 3: Walking Pose -->
+                    <div class="rounded-lg overflow-hidden shadow-lg">
+                        <div class="image-slider mannequin-slider placeholder">
+                            <div class="slider-item active" style="background-image: url('https://placehold.co/600x800/222222/D4AF37?text=Walking+Pose+1');"></div>
+                            <div class="slider-item" style="background-image: url('https://placehold.co/600x800/222222/D4AF37?text=Walking+Pose+2');"></div>
+                            <div class="slider-item" style="background-image: url('https://placehold.co/600x800/222222/D4AF37?text=Walking+Pose+3');"></div>
+                            <div class="absolute inset-0 flex items-center justify-center p-4">
+                                <span class="text-xl font-bold">[Mannequin Walking Pose]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
+        <!-- ===== 5. CONTACT US SECTION ===== -->
+        <section id="contact" class="page-section py-20 md:py-32 bg-brand-charcoal">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-brand-gold mb-16 text-center">Contact Us</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                    
+                    <!-- Contact Info -->
+                    <div class="space-y-6 text-lg">
+                        <h3 class="text-3xl font-serif font-bold text-white mb-4">Malamgiemou Textiles</h3>
+                        <p class="text-gray-300 leading-relaxed">
+                            Have a question or want to place a custom order? Get in touch with us. We are here to assist you with all your fabric and styling needs.
+                        </p>
+                        <div class="space-y-4 pt-4">
+                            <!-- WhatsApp -->
+                            <div class="flex items-center space-x-3">
+                                <svg class="whatsapp-svg text-brand-gold flex-shrink-0"><use href="#icon-whatsapp"></use></svg>
+                                <div>
+                                    <span class="font-semibold text-gray-400">WhatsApp:</span>
+                                    <a href="https://wa.me/2347086676866" target="_blank" rel="noopener noreferrer" class="block text-white hover:text-brand-gold transition-colors">
+                                        07086676866
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Email -->
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-6 h-6 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                <div>
+                                    <span class="font-semibold text-gray-400">Email:</span>
+                                    <a href="mailto:malamgiemou@gmail.com" class="block text-white hover:text-brand-gold transition-colors">
+                                        malamgiemou@gmail.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Form -->
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-300 mb-2 uppercase tracking-wider">Name</label>
+                            <input type="text" id="name" name="name" required
+                                   class="w-full bg-brand-gray border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-gold focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300 mb-2 uppercase tracking-wider">Email</label>
+                            <input type="email" id="email" name="email" required
+                                   class="w-full bg-brand-gray border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-gold focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-300 mb-2 uppercase tracking-wider">Message</label>
+                            <textarea id="message" name="message" rows="5" required
+                                      class="w-full bg-brand-gray border border-gray-600 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-brand-gold focus:border-transparent"></textarea>
+                        </div>
+                        <button type="submit" class="btn-gold w-full font-bold uppercase tracking-wider py-3 px-8 rounded-md text-lg">
+                            Send Message
+                        </button>
+                        <p id="form-status" class="text-center text-brand-gold mt-4"></p>
+                    </form>
+                    
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-black py-12">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <!-- Mini Navigation -->
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#home" class="nav-link-footer text-gray-400 hover:text-brand-gold uppercase text-sm tracking-widest" data-target="home">Home</a>
+                <a href="#about" class="nav-link-footer text-gray-400 hover:text-brand-gold uppercase text-sm tracking-widest" data-target="about">About</a>
+                <a href="#products" class="nav-link-footer text-gray-400 hover:text-brand-gold uppercase text-sm tracking-widest" data-target="products">Products</a>
+                <a href="#gallery" class="nav-link-footer text-gray-400 hover:text-brand-gold uppercase text-sm tracking-widest" data-target="gallery">Gallery</a>
+            </div>
+            
+            <!-- Footer WhatsApp Link -->
+            <div class="mb-6">
+                <a href="https://wa.me/c/2348134530705" target="_blank" rel="noopener noreferrer" 
+                   class="inline-flex items-center text-brand-gold hover:text-white font-semibold transition-colors duration-300">
+                    <svg class="whatsapp-svg mr-2"><use href="#icon-whatsapp"></use></svg>
+                    Shop on WhatsApp Catalog
+                </a>
+            </div>
+
+            <!-- Copyright -->
+            <p class="text-sm">&copy; <span id="current-year"></span> MALAMGIEMOU TEXTILES. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ===== FLOATING WHATSAPP BUTTON (Mobile Only) ===== -->
+    <a href="https://wa.me/c/2348134530705" target="_blank" rel="noopener noreferrer"
+       class="fixed bottom-6 right-6 bg-brand-gold p-4 rounded-full shadow-lg z-40 md:hidden animate-pulse-slow">
+        <svg class="whatsapp-svg w-8 h-8 text-brand-charcoal"><use href="#icon-whatsapp"></use></svg>
+    </a>
+    
+    <!-- ===== LIGHTBOX MODAL ===== -->
+    <div id="lightbox" class="lightbox-overlay">
+        <button id="lightbox-close" class="lightbox-close">&times;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Enlarged gallery view">
+        </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Log to confirm script is running
+            console.log('Malamgiemou Textiles SPA script loaded and running.');
+
+            // --- Set Current Year in Footer ---
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // --- Mobile Menu Toggle ---
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // --- SPA Navigation Handling ---
+            const allNavLinks = document.querySelectorAll('.nav-link, .nav-link-mobile, .nav-link-header, .nav-link-footer, .explore-btn');
+            const sections = document.querySelectorAll('.page-section');
+            const headerNavLinks = document.querySelectorAll('.nav-link');
+
+            function setActiveLink(targetId) {
+                // Deactivate all header links
+                headerNavLinks.forEach(link => link.classList.remove('active'));
+                
+                // Activate the matching header link
+                const activeHeaderLink = document.querySelector(`.nav-link[data-target="${targetId}"]`);
+                if (activeHeaderLink) {
+                    activeHeaderLink.classList.add('active');
+                }
+            }
+
+            function navigateTo(targetId) {
+                console.log('Navigating to section:', targetId); // Debug log
+                // Hide all sections
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // Show the target section
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    setActiveLink(targetId);
+                    
+                    // If it's a mobile link, close the menu
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                    
+                    // Scroll to top of page (good for section transitions)
+                    window.scrollTo(0, 0);
+                }
+            }
+            
+            allNavLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent default anchor jump
+                    const targetId = link.getAttribute('data-target');
+                    if (targetId) {
+                        navigateTo(targetId);
+                    }
+                });
+            });
+
+            // --- Initialize "Learn More" Toggle ---
+            const toggleBtn = document.getElementById('toggle-btn');
+            const toggleContent = document.getElementById('toggle-content');
+            if (toggleBtn && toggleContent) {
+                toggleBtn.addEventListener('click', () => {
+                    toggleContent.classList.toggle('open');
+                    if (toggleContent.classList.contains('open')) {
+                        toggleBtn.textContent = 'Show Less';
+                    } else {
+                        toggleBtn.textContent = 'Learn More';
+                    }
+                });
+            }
+
+            // --- Initialize Image Sliders ---
+            function initSlider(sliderSelector) {
+                const sliders = document.querySelectorAll(sliderSelector);
+                
+                sliders.forEach(slider => {
+                    const items = slider.querySelectorAll('.slider-item');
+                    if (items.length === 0) return;
+                    
+                    let currentItem = 0;
+                    
+                    function showSlide(index) {
+                        items.forEach(item => item.classList.remove('active'));
+                        items[index].classList.add('active');
+                    }
+                    
+                    function nextSlide() {
+                        currentItem = (currentItem + 1) % items.length;
+                        showSlide(currentItem);
+                    }
+                    
+                    // Initial slide
+                    showSlide(currentItem);
+                    // Start auto-slide
+                    setInterval(nextSlide, 3500); // 3.5 seconds
+                });
+            }
+
+            // Init all sliders
+            initSlider('.hero-slider');
+            initSlider('.mannequin-slider');
+
+
+            // --- Initialize Lightbox ---
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const galleryItems = document.querySelectorAll('.gallery-item img');
+
+            if (lightbox && lightboxImg && lightboxClose) {
+                galleryItems.forEach(item => {
+                    // *** THIS WAS THE BUG: Corrected '()_=>' to '() =>' ***
+                    item.addEventListener('click', () => { 
+                        const highResSrc = item.getAttribute('data-src') || item.getAttribute('src');
+                        lightboxImg.setAttribute('src', highResSrc);
+                        lightbox.classList.add('show');
+                    });
+                });
+
+                function closeLightbox() {
+                    lightbox.classList.remove('show');
+                    lightboxImg.setAttribute('src', ''); // Clear src
+                }
+                
+                lightboxClose.addEventListener('click', closeLightbox);
+                lightbox.addEventListener('click', (e) => {
+                    // Close if clicking on the overlay, not the image
+                    if (e.target === lightbox) {
+                        closeLightbox();
+                    }
+                });
+            }
+            
+            // --- Contact Form Handling ---
+            const contactForm = document.getElementById('contact-form');
+            const formStatus = document.getElementById('form-status');
+            if (contactForm && formStatus) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    // This is a static site, so we just show a success message
+                    formStatus.textContent = 'Thank you! Your message has been sent.';
+                    contactForm.reset();
+                    
+                    // Clear the message after a few seconds
+                    setTimeout(() => {
+                        formStatus.textContent = '';
+                    }, 5000);
+                });
+            }
+            
+            // Set initial active state on load
+            setActiveLink('home');
+        });
+    </script>
+</body>
+</html>
+
