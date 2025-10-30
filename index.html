@@ -55,6 +55,27 @@
             height: 1.25em;
             fill: currentColor;
         }
+        html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* full viewport height */
+}
+
+main {
+  flex: 1; /* takes up all space between header and footer */
+}
+
+footer {
+  background-color: #111; /* your dark theme color */
+  color: #d4af37; /* your gold text */
+  text-align: center;
+  padding: 20px;
+}
     </style>
 
     <!-- 5. Custom CSS for SPA transitions, Sliders, and Lightbox -->
